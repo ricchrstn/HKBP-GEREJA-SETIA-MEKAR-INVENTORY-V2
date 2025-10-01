@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug CRUD Issues</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .btn { background: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #0056b3; }
+        .btn.danger { background: #dc3545; }
+        .btn.success { background: #28a745; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .log { background: #f8f9fa; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select, .form-group textarea { 
+            width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🔧 Debug CRUD Issues - HKBP Setia Mekar</h1>
+            <p>Diagnose masalah "Failed to fetch" pada operasi CRUD</p>
+            
+            <div class="status info" id="status">
+                Status: Ready to diagnose...
+            </div>
+            
+            <div class="grid">
+                <div>
+                    <h3>🔍 Server Tests</h3>
+                    <button class="btn" onclick="checkServer()">Check Server Status</button>
+                    <button class="btn" onclick="checkRoutes()">Check Routes</button>
+                    <button class="btn" onclick="checkAuth()">Check Authentication</button>
+                    <button class="btn" onclick="checkCSRF()">Check CSRF Token</button>
+                </div>
+                
+                <div>
+                    <h3>🧪 CRUD Tests</h3>
+                    <button class="btn success" onclick="testKategoriCreate()">Test Kategori Create</button>
+                    <button class="btn success" onclick="testBarangCreate()">Test Barang Create</button>
+                    <button class="btn danger" onclick="testWithoutAuth()">Test Without Auth</button>
+                    <button class="btn" onclick="clearLog()">Clear Log</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>📝 Manual Test Forms</h3>
+            <div class="grid">
+                <div>
+                    <h4>Test Kategori</h4>
+                    <div class="form-group">
+                        <label>Nama Kategori:</label>
+                        <input type="text" id="test_kategori_nama" value="Test Kategori Debug">
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi:</label>
+                        <textarea id="test_kategori_desc">Kategori untuk testing debug</textarea>
+                    </div>
+                    <button class="btn success" onclick="submitTestKategori()">Submit Test Kategori</button>
+                </div>
+                
+                <div>
+                    <h4>Test Barang</h4>
+                    <div class="form-group">
+                        <label>Nama Barang:</label>
+                        <input type="text" id="test_barang_nama" value="Test Barang Debug">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori ID:</label>
+                        <input type="number" id="test_barang_kategori" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Satuan:</label>
+                        <input type="text" id="test_barang_satuan" value="pcs">
+                    </div>
+                    <div class="form-group">
+                        <label>Stok:</label>
+                        <input type="number" id="test_barang_stok" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Harga:</label>
+                        <input type="number" id="test_barang_harga" value="50000">
+                    </div>
+                    <button class="btn success" onclick="submitTestBarang()">Submit Test Barang</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>📋 Debug Log</h3>
+            <div class="log" id="log"></div>
+        </div>
+    </div>
+
+    <script>
+    function log(message, type = 'info') {
+        const logDiv = document.getElementById('log');
+        const timestamp = new Date().toLocaleTimeString();
+        const typeIcon = {
+            'info': 'ℹ️',
+            'success': '✅',
+            'error': '❌',
+            'warning': '⚠️'
+        };
+        logDiv.innerHTML += `${typeIcon[type]} [${timestamp}] ${message}\n`;
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    function updateStatus(message, type = 'info') {
+        const statusDiv = document.getElementById('status');
+        statusDiv.innerHTML = message;
+        statusDiv.className = `status ${type}`;
+    }
+
+    function clearLog() {
+        document.getElementById('log').innerHTML = '';
+        updateStatus('Log cleared', 'info');
+    }
+
+    async function checkServer() {
+        updateStatus('Checking server...', 'info');
+        log('🔍 Checking if Laravel server is running...', 'info');
+        
+        try {
+            const response = await fetch(window.location.origin, {
+                method: 'GET',
+                headers: { 'Accept': 'text/html' }
+            });
+            
+            if (response.ok) {
+                log('✅ Server is running and reachable', 'success');
+                updateStatus('✅ Server OK', 'success');
+            } else {
+                log(`❌ Server returned status: ${response.status} ${response.statusText}`, 'error');
+                updateStatus('❌ Server Error', 'error');
+            }
+        } catch (error) {
+            log(`❌ Cannot reach server: ${error.message}`, 'error');
+            updateStatus('❌ Server Unreachable', 'error');
+        }
+    }
+
+    async function checkRoutes() {
+        updateStatus('Checking routes...', 'info');
+        log('🔍 Testing Laravel routes...', 'info');
+        
+        const routes = [
+            { url: '/login', name: 'Login' },
+            { url: '/pengurus/dashboard', name: 'Pengurus Dashboard' },
+            { url: '/pengurus/barang', name: 'Barang Index' },
+            { url: '/pengurus/barang/create', name: 'Barang Create' },
+            { url: '/pengurus/kategori', name: 'Kategori Index' }
+        ];
+        
+        for (const route of routes) {
+            try {
+                const response = await fetch(route.url, {
+                    method: 'GET',
+                    headers: { 'Accept': 'text/html' }
+                });
+                
+                if (response.ok) {
+                    log(`✅ ${route.name} (${route.url}) - OK`, 'success');
+                } else if (response.status === 302) {
+                    log(`🔄 ${route.name} (${route.url}) - Redirect (auth required)`, 'warning');
+                } else {
+                    log(`❌ ${route.name} (${route.url}) - Status: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ ${route.name} (${route.url}) - Error: ${error.message}`, 'error');
+            }
+        }
+        
+        updateStatus('Route check completed', 'info');
+    }
+
+    async function checkAuth() {
+        updateStatus('Checking authentication...', 'info');
+        log('🔍 Testing authentication status...', 'info');
+        
+        try {
+            const response = await fetch('/pengurus/dashboard', {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                log('✅ User is authenticated', 'success');
+                updateStatus('✅ Authenticated', 'success');
+            } else if (response.status === 302 || response.status === 401) {
+                log('❌ User is not authenticated - need to login', 'error');
+                updateStatus('❌ Not Authenticated', 'error');
+                
+                // Try to get login page
+                const loginResponse = await fetch('/login');
+                if (loginResponse.ok) {
+                    log('ℹ️ Login page is accessible', 'info');
+                    log('💡 Solution: Please login first at /login', 'info');
+                }
+            } else {
+                log(`❌ Auth check failed: ${response.status}`, 'error');
+                updateStatus('❌ Auth Error', 'error');
+            }
+        } catch (error) {
+            log(`❌ Auth check error: ${error.message}`, 'error');
+            updateStatus('❌ Auth Check Failed', 'error');
+        }
+    }
+
+    async function checkCSRF() {
+        updateStatus('Checking CSRF token...', 'info');
+        log('🔍 Checking CSRF token availability...', 'info');
+        
+        // Check if CSRF token exists in meta tag
+        const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+        if (csrfMeta) {
+            const token = csrfMeta.getAttribute('content');
+            log(`✅ CSRF token found in meta tag: ${token.substring(0, 10)}...`, 'success');
+        } else {
+            log('❌ CSRF token not found in meta tag', 'error');
+            log('💡 Add this to your HTML head: <meta name="csrf-token" content="{{ csrf_token() }}">', 'info');
+        }
+        
+        // Try to get CSRF token from Laravel
+        try {
+            const response = await fetch('/login', {
+                method: 'GET',
+                headers: { 'Accept': 'text/html' }
+            });
+            
+            if (response.ok) {
+                const html = await response.text();
+                if (html.includes('csrf-token')) {
+                    log('✅ CSRF token available from Laravel', 'success');
+                } else {
+                    log('⚠️ CSRF token not found in Laravel response', 'warning');
+                }
+            }
+        } catch (error) {
+            log(`❌ Cannot check CSRF from Laravel: ${error.message}`, 'error');
+        }
+        
+        updateStatus('CSRF check completed', 'info');
+    }
+
+    async function testKategoriCreate() {
+        updateStatus('Testing kategori create...', 'info');
+        log('🧪 Testing POST /pengurus/kategori...', 'info');
+        
+        const formData = new FormData();
+        formData.append('nama', 'Test Kategori ' + Date.now());
+        formData.append('deskripsi', 'Test deskripsi untuk debug');
+        
+        try {
+            const response = await fetch('/pengurus/kategori', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            
+            log(`Response status: ${response.status} ${response.statusText}`, 'info');
+            
+            if (response.ok) {
+                const data = await response.json();
+                log(`✅ Kategori create successful: ${JSON.stringify(data)}`, 'success');
+                updateStatus('✅ Kategori Create OK', 'success');
+            } else if (response.status === 302) {
+                log('🔄 Redirect response - probably need authentication', 'warning');
+                updateStatus('⚠️ Need Authentication', 'warning');
+            } else if (response.status === 422) {
+                const data = await response.json();
+                log(`⚠️ Validation error: ${JSON.stringify(data)}`, 'warning');
+                updateStatus('⚠️ Validation Error', 'warning');
+            } else {
+                const text = await response.text();
+                log(`❌ Request failed: ${text}`, 'error');
+                updateStatus('❌ Request Failed', 'error');
+            }
+        } catch (error) {
+            log(`❌ Fetch error: ${error.message}`, 'error');
+            updateStatus('❌ Network Error', 'error');
+            
+            if (error.message.includes('Failed to fetch')) {
+                log('💡 This usually means:', 'info');
+                log('   1. Laravel server is not running', 'info');
+                log('   2. Wrong URL or port', 'info');
+                log('   3. CORS issues', 'info');
+                log('   4. Network connectivity problems', 'info');
+            }
+        }
+    }
+
+    async function testBarangCreate() {
+        updateStatus('Testing barang create...', 'info');
+        log('🧪 Testing POST /pengurus/barang...', 'info');
+        
+        const formData = new FormData();
+        formData.append('nama', 'Test Barang ' + Date.now());
+        formData.append('kategori_id', '1');
+        formData.append('satuan', 'pcs');
+        formData.append('stok', '10');
+        formData.append('harga', '50000');
+        formData.append('deskripsi', 'Test barang untuk debug');
+        
+        try {
+            const response = await fetch('/pengurus/barang', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            
+            log(`Response status: ${response.status} ${response.statusText}`, 'info');
+            
+            if (response.ok) {
+                const data = await response.json();
+                log(`✅ Barang create successful: ${JSON.stringify(data)}`, 'success');
+                updateStatus('✅ Barang Create OK', 'success');
+            } else if (response.status === 302) {
+                log('🔄 Redirect response - probably need authentication', 'warning');
+                updateStatus('⚠️ Need Authentication', 'warning');
+            } else if (response.status === 422) {
+                const data = await response.json();
+                log(`⚠️ Validation error: ${JSON.stringify(data)}`, 'warning');
+                updateStatus('⚠️ Validation Error', 'warning');
+            } else {
+                const text = await response.text();
+                log(`❌ Request failed: ${text}`, 'error');
+                updateStatus('❌ Request Failed', 'error');
+            }
+        } catch (error) {
+            log(`❌ Fetch error: ${error.message}`, 'error');
+            updateStatus('❌ Network Error', 'error');
+        }
+    }
+
+    async function testWithoutAuth() {
+        updateStatus('Testing without authentication...', 'info');
+        log('🧪 Testing requests without authentication...', 'info');
+        
+        // Clear any existing cookies/session
+        log('ℹ️ This test simulates unauthenticated requests', 'info');
+        
+        try {
+            const response = await fetch('/pengurus/kategori', {
+                method: 'POST',
+                body: new FormData(),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            log(`Response status: ${response.status} ${response.statusText}`, 'info');
+            
+            if (response.status === 302) {
+                log('✅ Correctly redirecting unauthenticated requests', 'success');
+                updateStatus('✅ Auth Middleware Working', 'success');
+            } else if (response.status === 401) {
+                log('✅ Correctly returning 401 for unauthenticated requests', 'success');
+                updateStatus('✅ Auth Middleware Working', 'success');
+            } else {
+                log('⚠️ Unexpected response for unauthenticated request', 'warning');
+                updateStatus('⚠️ Auth Middleware Issue', 'warning');
+            }
+        } catch (error) {
+            log(`❌ Error testing without auth: ${error.message}`, 'error');
+            updateStatus('❌ Test Failed', 'error');
+        }
+    }
+
+    async function submitTestKategori() {
+        const nama = document.getElementById('test_kategori_nama').value;
+        const desc = document.getElementById('test_kategori_desc').value;
+        
+        log(`🧪 Manual test: Creating kategori "${nama}"`, 'info');
+        
+        const formData = new FormData();
+        formData.append('nama', nama);
+        formData.append('deskripsi', desc);
+        
+        try {
+            const response = await fetch('/pengurus/kategori', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            
+            const data = await response.json();
+            log(`Response: ${JSON.stringify(data, null, 2)}`, 'info');
+            
+            if (response.ok && data.success) {
+                log('✅ Manual kategori test successful!', 'success');
+                alert('Kategori berhasil dibuat: ' + data.kategori.nama);
+            } else {
+                log('❌ Manual kategori test failed', 'error');
+                alert('Gagal membuat kategori: ' + (data.message || 'Unknown error'));
+            }
+        } catch (error) {
+            log(`❌ Manual test error: ${error.message}`, 'error');
+            alert('Error: ' + error.message);
+        }
+    }
+
+    async function submitTestBarang() {
+        const nama = document.getElementById('test_barang_nama').value;
+        const kategori = document.getElementById('test_barang_kategori').value;
+        const satuan = document.getElementById('test_barang_satuan').value;
+        const stok = document.getElementById('test_barang_stok').value;
+        const harga = document.getElementById('test_barang_harga').value;
+        
+        log(`🧪 Manual test: Creating barang "${nama}"`, 'info');
+        
+        const formData = new FormData();
+        formData.append('nama', nama);
+        formData.append('kategori_id', kategori);
+        formData.append('satuan', satuan);
+        formData.append('stok', stok);
+        formData.append('harga', harga);
+        
+        try {
+            const response = await fetch('/pengurus/barang', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            
+            if (response.ok) {
+                log('✅ Manual barang test successful!', 'success');
+                alert('Barang berhasil dibuat!');
+            } else {
+                const data = await response.json();
+                log(`Response: ${JSON.stringify(data, null, 2)}`, 'info');
+                log('❌ Manual barang test failed', 'error');
+                alert('Gagal membuat barang: ' + (data.message || 'Unknown error'));
+            }
+        } catch (error) {
+            log(`❌ Manual test error: ${error.message}`, 'error');
+            alert('Error: ' + error.message);
+        }
+    }
+
+    // Auto-run basic checks
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            checkServer();
+        }, 500);
+    });
+    </script>
+</body>
+</html>
