@@ -4,31 +4,17 @@ Sistem manajemen inventori berbasis web yang canggih untuk mengelola barang-bara
 
 ## 🚀 Fitur Utama
 
-### 📊 Dashboard Multi-Role
-- **Admin Dashboard**: Overview sistem, statistik inventori, grafik transaksi
-- **Pengurus Dashboard**: Manajemen inventori, peminjaman, perawatan, audit
-- **Bendahara Dashboard**: Manajemen keuangan, verifikasi pengadaan, analisis TOPSIS
-
-### 📦 Manajemen Inventori Lengkap
-- CRUD barang dengan upload gambar
-- Sistem kode barang otomatis (BRG-XXX)
-- Kategori barang terorganisir
-- Tracking stok real-time
-- Status barang (Aktif, Rusak, Hilang, Perawatan)
-- Soft delete dengan arsip barang
-
 ### 👥 Multi-Role System
 - **Admin**: Manajemen user, inventori, kategori, jadwal audit, laporan sistem
 - **Pengurus**: Pencatatan barang masuk/keluar, peminjaman, perawatan, audit, pengajuan
 - **Bendahara**: Verifikasi pengadaan, manajemen kas, analisis TOPSIS, laporan keuangan
 
-### 📋 Fitur Transaksi & Operasional
+### 📦 Manajemen Inventori
+- CRUD barang dengan upload gambar
+- Sistem kode barang otomatis (BRG-XXX)
+- Tracking stok real-time
+- Status barang (Aktif, Rusak, Hilang, Perawatan)
 - Pencatatan barang masuk/keluar dengan validasi stok
-- Manajemen peminjaman dengan tracking status
-- Jadwal perawatan barang otomatis
-- Sistem pengajuan barang dengan kriteria TOPSIS
-- Audit barang mandiri dan terjadwal
-- Tracking status peminjaman (Dipinjam, Dikembalikan, Terlambat)
 
 ### 🧮 Analisis TOPSIS
 - Sistem pengambilan keputusan multi-kriteria
@@ -43,9 +29,7 @@ Sistem manajemen inventori berbasis web yang canggih untuk mengelola barang-bara
 - Tracking saldo real-time
 
 ### 📈 Laporan & Export
-- Laporan inventori (masuk/keluar, peminjaman, perawatan, audit)
-- Laporan keuangan dengan grafik
-- Laporan aktivitas sistem
+- Laporan inventori dan keuangan
 - Export ke PDF dan Excel
 - Filter berdasarkan tanggal, status, kategori
 
@@ -283,29 +267,6 @@ php artisan storage:link
 Untuk bantuan teknis atau pertanyaan:
 - Email: support@gereja.com
 - WhatsApp: +62xxx-xxxx-xxxx
-
-## 🚀 Fitur Unggulan
-
-### 🧮 Sistem TOPSIS
-- Algoritma pengambilan keputusan multi-kriteria
-- Perankingan otomatis pengajuan pengadaan
-- Visualisasi hasil analisis yang detail
-
-### 📊 Dashboard Interaktif
-- Grafik real-time dengan Chart.js
-- Statistik komprehensif per role
-- Notifikasi stok rendah otomatis
-
-### 📈 Laporan Komprehensif
-- Export PDF dan Excel
-- Filter berdasarkan tanggal, status, kategori
-- Laporan keuangan dengan grafik
-- Laporan aktivitas sistem
-
-### 🔄 Workflow Terintegrasi
-- Pengajuan → Verifikasi → Analisis TOPSIS → Persetujuan
-- Tracking status real-time
-- Audit trail lengkap
 
 ## 📄 License
 
