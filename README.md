@@ -257,6 +257,185 @@ gereja/
 - Laporan keuangan komprehensif
 - Perankingan otomatis pengajuan
 
+## 🔄 Cara Kerja Sistem (Step-by-Step)
+
+### 🚀 **Alur Umum Sistem**
+
+#### **1. Login & Authentication**
+```
+User Login → RoleMiddleware → Redirect ke Dashboard sesuai Role
+```
+
+#### **2. Request-Response Cycle**
+```
+User Request → Middleware (Auth + Role) → Route → Controller → Model → Database → View (Blade) → Response
+```
+
+### 🔧 **Alur Kerja Admin**
+
+#### **Step 1: Setup Awal**
+1. **Login** sebagai Admin
+2. **Buat Kategori Barang** (Alat Musik, Buku, Peralatan, dll)
+3. **Buat User** untuk Pengurus dan Bendahara
+4. **Setup Jadwal Audit** (bulanan/triwulanan)
+
+#### **Step 2: Manajemen Inventori**
+1. **Tambah Barang Baru**:
+   - Input nama, kategori, stok awal
+   - Upload gambar barang
+   - Set status (Aktif/Rusak/Hilang)
+2. **Kelola Kategori**:
+   - Tambah/edit/hapus kategori
+   - Assign barang ke kategori
+3. **Monitoring Stok**:
+   - Cek notifikasi stok rendah
+   - Review laporan inventori
+
+#### **Step 3: Laporan & Monitoring**
+1. **Generate Laporan**:
+   - Laporan inventori (PDF/Excel)
+   - Laporan aktivitas sistem
+   - Laporan keuangan
+2. **Export Data**:
+   - Filter berdasarkan tanggal/kategori
+   - Download laporan
+
+### 📦 **Alur Kerja Pengurus**
+
+#### **Step 1: Pencatatan Barang Masuk**
+1. **Login** sebagai Pengurus
+2. **Tambah Barang Masuk**:
+   - Pilih kategori → Pilih barang
+   - Input jumlah, tanggal, supplier
+   - Upload bukti pembelian
+3. **Validasi Stok**:
+   - Sistem otomatis update stok
+   - Notifikasi jika stok rendah
+
+#### **Step 2: Pencatatan Barang Keluar**
+1. **Tambah Barang Keluar**:
+   - Pilih barang yang tersedia
+   - Input jumlah, tujuan, tanggal
+   - Validasi stok tersedia
+2. **Update Stok**:
+   - Stok otomatis berkurang
+   - Alert jika stok habis
+
+#### **Step 3: Manajemen Peminjaman**
+1. **Buat Peminjaman**:
+   - Pilih barang yang tersedia
+   - Input peminjam, tanggal pinjam/kembali
+   - Set status (Dipinjam)
+2. **Tracking Peminjaman**:
+   - Monitor status peminjaman
+   - Alert jika terlambat
+3. **Pengembalian**:
+   - Update status (Dikembalikan)
+   - Cek kondisi barang
+
+#### **Step 4: Perawatan Barang**
+1. **Jadwal Perawatan**:
+   - Buat jadwal perawatan
+   - Set reminder otomatis
+2. **Eksekusi Perawatan**:
+   - Update status perawatan
+   - Catat hasil perawatan
+3. **Selesaikan Perawatan**:
+   - Update status (Selesai)
+   - Barang kembali aktif
+
+#### **Step 5: Audit Barang**
+1. **Audit Mandiri**:
+   - Cek fisik barang
+   - Update status jika ada perubahan
+2. **Audit Terjadwal**:
+   - Ikuti jadwal dari Admin
+   - Input hasil audit
+   - Update status barang
+
+#### **Step 6: Pengajuan Barang**
+1. **Buat Pengajuan**:
+   - Input barang yang dibutuhkan
+   - Alasan pengajuan
+   - Prioritas urgensi
+2. **Submit ke Bendahara**:
+   - Pengajuan masuk ke verifikasi
+   - Tunggu analisis TOPSIS
+
+### 💰 **Alur Kerja Bendahara**
+
+#### **Step 1: Manajemen Kas**
+1. **Login** sebagai Bendahara
+2. **Pencatatan Kas Masuk**:
+   - Input sumber dana, jumlah
+   - Upload bukti transaksi
+   - Update saldo kas
+3. **Pencatatan Kas Keluar**:
+   - Input pengeluaran, jumlah
+   - Upload bukti transaksi
+   - Update saldo kas
+
+#### **Step 2: Verifikasi Pengadaan**
+1. **Review Pengajuan**:
+   - Lihat daftar pengajuan dari Pengurus
+   - Cek alasan dan prioritas
+2. **Analisis TOPSIS**:
+   - Input nilai kriteria:
+     - Tingkat Urgensi (1-5)
+     - Ketersediaan Stok (1-5)
+     - Ketersediaan Dana (1-5)
+   - Sistem hitung ranking otomatis
+3. **Verifikasi & Persetujuan**:
+   - Approve/reject berdasarkan ranking
+   - Berikan alasan keputusan
+
+#### **Step 3: Analisis TOPSIS**
+1. **Input Nilai Kriteria**:
+   - Kriteria 1: Tingkat Urgensi (Benefit) - Bobot: 0.3
+   - Kriteria 2: Ketersediaan Stok (Cost) - Bobot: 0.25
+   - Kriteria 3: Ketersediaan Dana (Benefit) - Bobot: 0.45
+2. **Hitung Ranking**:
+   - Sistem otomatis hitung TOPSIS
+   - Generate ranking pengajuan
+3. **Review Hasil**:
+   - Lihat ranking pengajuan
+   - Ambil keputusan berdasarkan ranking
+
+#### **Step 4: Laporan Keuangan**
+1. **Generate Laporan Kas**:
+   - Laporan kas masuk/keluar
+   - Grafik transaksi
+   - Saldo akhir
+2. **Laporan Pengadaan**:
+   - Status pengajuan
+   - Analisis TOPSIS
+   - Keputusan verifikasi
+3. **Export Laporan**:
+   - PDF/Excel format
+   - Filter berdasarkan periode
+
+### 🔄 **Workflow Terintegrasi**
+
+#### **Siklus Pengajuan Barang**
+```
+Pengurus (Pengajuan) → Bendahara (Verifikasi) → TOPSIS (Analisis) → Keputusan (Approve/Reject)
+```
+
+#### **Siklus Peminjaman**
+```
+Pengurus (Buat Peminjaman) → Tracking Status → Pengembalian → Update Stok
+```
+
+#### **Siklus Audit**
+```
+Admin (Jadwal Audit) → Pengurus (Eksekusi) → Update Status → Laporan
+```
+
+#### **Siklus Perawatan**
+```
+Sistem (Reminder) → Pengurus (Eksekusi) → Update Status → Monitoring
+```
+
 ## 🔧 Konfigurasi
 
 ### Upload File
