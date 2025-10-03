@@ -126,68 +126,136 @@ Akses aplikasi di: `http://localhost:8000`
 gereja/
 ├── app/
 │   ├── Http/Controllers/
-│   │   ├── Admin/           # Controller untuk Admin
-│   │   │   ├── DashboardController.php
-│   │   │   ├── BarangController.php
-│   │   │   ├── UserController.php
-│   │   │   ├── KategoriController.php
-│   │   │   ├── JadwalAuditController.php
-│   │   │   └── LaporanController.php
-│   │   ├── Pengurus/        # Controller untuk Pengurus
-│   │   │   ├── DashboardController.php
-│   │   │   ├── BarangMasukController.php
-│   │   │   ├── BarangKeluarController.php
-│   │   │   ├── PeminjamanController.php
-│   │   │   ├── PerawatanController.php
-│   │   │   ├── AuditController.php
-│   │   │   └── PengajuanController.php
-│   │   ├── Bendahara/       # Controller untuk Bendahara
-│   │   │   ├── DashboardController.php
-│   │   │   ├── KasController.php
-│   │   │   ├── VerifikasiPengadaanController.php
-│   │   │   ├── AnalisisTopsisController.php
-│   │   │   └── LaporanController.php
+│   │   ├── Admin/                    # Controller untuk Admin
+│   │   │   ├── DashboardController.php      # Dashboard admin
+│   │   │   ├── BarangController.php           # Manajemen inventori
+│   │   │   ├── UserController.php           # Manajemen pengguna
+│   │   │   ├── KategoriController.php        # Manajemen kategori
+│   │   │   ├── JadwalAuditController.php    # Jadwal audit
+│   │   │   └── LaporanController.php         # Laporan sistem
+│   │   ├── Pengurus/                 # Controller untuk Pengurus
+│   │   │   ├── DashboardController.php      # Dashboard pengurus
+│   │   │   ├── BarangMasukController.php     # Barang masuk
+│   │   │   ├── BarangKeluarController.php   # Barang keluar
+│   │   │   ├── PeminjamanController.php      # Peminjaman barang
+│   │   │   ├── PerawatanController.php       # Perawatan barang
+│   │   │   ├── AuditController.php           # Audit barang
+│   │   │   └── PengajuanController.php       # Pengajuan barang
+│   │   ├── Bendahara/                # Controller untuk Bendahara
+│   │   │   ├── DashboardController.php       # Dashboard bendahara
+│   │   │   ├── KasController.php            # Manajemen kas
+│   │   │   ├── VerifikasiPengadaanController.php # Verifikasi pengadaan
+│   │   │   ├── AnalisisTopsisController.php # Analisis TOPSIS
+│   │   │   └── LaporanController.php         # Laporan keuangan
 │   │   └── Auth/
-│   ├── Models/              # Eloquent Models
-│   │   ├── User.php
-│   │   ├── Barang.php
-│   │   ├── BarangMasuk.php
-│   │   ├── BarangKeluar.php
-│   │   ├── Peminjaman.php
-│   │   ├── Perawatan.php
-│   │   ├── Audit.php
-│   │   ├── Pengajuan.php
-│   │   ├── Kas.php
-│   │   ├── AnalisisTopsis.php
-│   │   └── Kriteria.php
+│   │       └── LoginController.php           # Authentication
+│   ├── Models/                       # Eloquent Models
+│   │   ├── User.php                  # Model pengguna
+│   │   ├── Barang.php                # Model barang
+│   │   ├── BarangMasuk.php           # Model barang masuk
+│   │   ├── BarangKeluar.php          # Model barang keluar
+│   │   ├── Peminjaman.php            # Model peminjaman
+│   │   ├── Perawatan.php             # Model perawatan
+│   │   ├── Audit.php                 # Model audit
+│   │   ├── Pengajuan.php             # Model pengajuan
+│   │   ├── Kas.php                   # Model kas
+│   │   ├── AnalisisTopsis.php        # Model analisis TOPSIS
+│   │   └── Kriteria.php              # Model kriteria
 │   └── Http/Middleware/
-│       └── RoleMiddleware.php
+│       └── RoleMiddleware.php        # Middleware role-based access
 ├── database/
-│   ├── migrations/          # Database migrations
-│   └── seeders/             # Database seeders
-│       ├── UserSeeder.php
-│       ├── KategoriSeeder.php
-│       ├── BarangSeeder.php
-│       └── KriteriaSeeder.php
+│   ├── migrations/                   # Database migrations
+│   └── seeders/                      # Database seeders
+│       ├── UserSeeder.php            # Seeder pengguna
+│       ├── KategoriSeeder.php        # Seeder kategori
+│       ├── BarangSeeder.php          # Seeder barang
+│       └── KriteriaSeeder.php       # Seeder kriteria
 ├── resources/
-│   ├── views/               # Blade templates
-│   │   ├── admin/           # Views untuk Admin
-│   │   ├── pengurus/        # Views untuk Pengurus
-│   │   ├── bendahara/       # Views untuk Bendahara
-│   │   ├── auth/            # Views untuk Authentication
-│   │   └── layouts/         # Layout templates
+│   ├── views/                        # Blade templates
+│   │   ├── admin/                    # Views untuk Admin
+│   │   │   ├── dashboard/            # Dashboard admin
+│   │   │   ├── inventori/            # Manajemen inventori
+│   │   │   ├── jadwal-audit/         # Jadwal audit
+│   │   │   ├── kategori/             # Manajemen kategori
+│   │   │   ├── laporan/              # Laporan sistem
+│   │   │   └── pengguna/             # Manajemen pengguna
+│   │   ├── pengurus/                 # Views untuk Pengurus
+│   │   │   ├── dashboard/            # Dashboard pengurus
+│   │   │   ├── barang/               # Manajemen barang
+│   │   │   ├── peminjaman/           # Peminjaman
+│   │   │   ├── pengajuan/            # Pengajuan
+│   │   │   ├── Perawatan/            # Perawatan
+│   │   │   └── audit/                # Audit
+│   │   ├── bendahara/                # Views untuk Bendahara
+│   │   │   ├── dashboard/             # Dashboard bendahara
+│   │   │   ├── kas/                  # Manajemen kas
+│   │   │   ├── verifikasi/           # Verifikasi pengadaan
+│   │   │   ├── analisis/             # Analisis TOPSIS
+│   │   │   └── laporan/              # Laporan keuangan
+│   │   ├── auth/                      # Views untuk Authentication
+│   │   └── layouts/                  # Layout templates
 │   ├── css/
 │   └── js/
 ├── routes/
-│   └── web.php              # Web routes
+│   └── web.php                       # Web routes
 ├── storage/
-│   └── app/public/          # File uploads
+│   └── app/public/                   # File uploads
 ├── public/
-│   └── storage/             # Symlink ke storage
-├── tailwind.config.js       # Tailwind CSS config
-├── vite.config.js           # Vite config
-└── package.json             # Node.js dependencies
+│   └── storage/                      # Symlink ke storage
+├── tailwind.config.js                # Tailwind CSS config
+├── vite.config.js                    # Vite config
+└── package.json                      # Node.js dependencies
 ```
+
+## 👥 Penjelasan Role & Fitur
+
+### 🔧 Admin
+**Akses Penuh Sistem**
+- **Dashboard**: Overview sistem, statistik inventori, grafik transaksi
+- **Manajemen Pengguna**: CRUD user, reset password, role management
+- **Master Inventori**: CRUD barang, kategori, status barang
+- **Jadwal Audit**: Buat jadwal audit, assign auditor
+- **Laporan Sistem**: Laporan inventori, keuangan, aktivitas sistem
+- **Arsip Barang**: Restore/force delete barang yang dihapus
+
+**Fitur Khusus Admin:**
+- Soft delete dengan arsip barang
+- Manajemen kategori barang
+- Jadwal audit terjadwal
+- Laporan komprehensif semua modul
+- Export PDF/Excel untuk semua laporan
+
+### 📦 Pengurus
+**Manajemen Operasional Inventori**
+- **Dashboard**: Statistik inventori, notifikasi stok rendah
+- **Barang Masuk**: Pencatatan barang masuk dengan validasi stok
+- **Barang Keluar**: Pencatatan barang keluar dengan validasi stok
+- **Peminjaman**: Manajemen peminjaman barang dengan tracking status
+- **Perawatan**: Jadwal dan tracking perawatan barang
+- **Audit**: Audit barang mandiri dan terjadwal
+- **Pengajuan**: Pengajuan barang baru dengan kriteria TOPSIS
+
+**Fitur Khusus Pengurus:**
+- Validasi stok real-time
+- Tracking status peminjaman (Dipinjam, Dikembalikan, Terlambat)
+- Perawatan otomatis berdasarkan jadwal
+- Pengajuan dengan kriteria TOPSIS
+- Audit mandiri dan terjadwal
+
+### 💰 Bendahara
+**Manajemen Keuangan & Verifikasi**
+- **Dashboard**: Statistik keuangan, saldo kas, grafik transaksi
+- **Manajemen Kas**: Pencatatan kas masuk/keluar, upload bukti
+- **Verifikasi Pengadaan**: Verifikasi pengajuan dari pengurus
+- **Analisis TOPSIS**: Perankingan pengajuan berdasarkan kriteria
+- **Laporan Keuangan**: Laporan kas, pengadaan, analisis
+
+**Fitur Khusus Bendahara:**
+- Analisis TOPSIS multi-kriteria
+- Verifikasi pengajuan pengadaan
+- Manajemen kas dengan bukti transaksi
+- Laporan keuangan komprehensif
+- Perankingan otomatis pengajuan
 
 ## 🔧 Konfigurasi
 
