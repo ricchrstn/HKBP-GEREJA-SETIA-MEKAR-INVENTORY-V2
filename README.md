@@ -1,4 +1,4 @@
-# Sistem Inventori Gereja HKBP Setia Mekar
+# Sistem Inventori Gereja HKBP Setia Mekar ⛪✨
 
 Sistem manajemen inventori berbasis web yang canggih untuk mengelola barang-barang gereja dengan fitur multi-role, analisis TOPSIS, dan laporan komprehensif.
 
@@ -10,30 +10,30 @@ Sistem manajemen inventori berbasis web yang canggih untuk mengelola barang-bara
 - **Bendahara**: Verifikasi pengadaan, manajemen kas, analisis TOPSIS, laporan keuangan
 
 ### 📦 Manajemen Inventori
-- CRUD barang dengan upload gambar
+- CRUD barang dengan upload gambar 📸
 - Sistem kode barang otomatis (BRG-XXX)
-- Tracking stok real-time
+- Tracking stok real-time ✅
 - Status barang (Aktif, Rusak, Hilang, Perawatan)
 - Pencatatan barang masuk/keluar dengan validasi stok
 
 ### 🧮 Analisis TOPSIS
-- Sistem pengambilan keputusan multi-kriteria
+- Sistem pengambilan keputusan multi-kriteria 📊
 - Kriteria: Tingkat Urgensi, Ketersediaan Stok, Ketersediaan Dana
-- Perankingan otomatis pengajuan pengadaan
-- Visualisasi hasil analisis
+- Perankingan otomatis pengajuan pengadaan 🥇
+- Visualisasi hasil analisis 📈
 
 ### 💰 Manajemen Keuangan
-- Pencatatan kas masuk/keluar
-- Upload bukti transaksi
+- Pencatatan kas masuk/keluar 💸
+- Upload bukti transaksi 🧾
 - Laporan keuangan komprehensif
 - Tracking saldo real-time
 
 ### 📈 Laporan & Export
-- Laporan inventori dan keuangan
-- Export ke PDF dan Excel
+- Laporan inventori dan keuangan 📄
+- Export ke PDF dan Excel 📤
 - Filter berdasarkan tanggal, status, kategori
 
-## 🛠️ Teknologi
+## 🛠️ Teknologi yang Digunakan
 
 - **Backend**: Laravel 12
 - **Frontend**: Tailwind CSS, Vite
@@ -50,7 +50,7 @@ Sistem manajemen inventori berbasis web yang canggih untuk mengelola barang-bara
 - Node.js & NPM (untuk Vite)
 - Web Server (Apache/Nginx)
 
-## 🚀 Instalasi
+## 🚀 Instalasi Cepat
 
 ### 1. Clone Repository
 ```bash
@@ -106,7 +106,7 @@ php artisan serve
 
 Akses aplikasi di: `http://localhost:8000`
 
-## 👤 Default Login
+## 👤 Login Default
 
 ### Admin
 - Email: `admin@gmail.com`
@@ -120,101 +120,104 @@ Akses aplikasi di: `http://localhost:8000`
 - Email: `bendahara@mail.com`
 - Password: `bendahara123`
 
-## 📁 Struktur Project
+## 📁 Struktur Project ✨
+
+Berikut adalah gambaran struktur direktori utama proyek, yang dirancang untuk keterorganisasian dan kemudahan pengembangan dengan pola MVC (Model-View-Controller) Laravel:
 
 ```
-gereja/
-├── app/
-│   ├── Http/Controllers/
-│   │   ├── Admin/
-│   │   │   ├── DashboardController.php
-│   │   │   ├── BarangController.php
-│   │   │   ├── UserController.php
-│   │   │   ├── KategoriController.php
-│   │   │   ├── JadwalAuditController.php
-│   │   │   └── LaporanController.php
-│   │   ├── Pengurus/
-│   │   │   ├── DashboardController.php
-│   │   │   ├── BarangMasukController.php
-│   │   │   ├── BarangKeluarController.php
-│   │   │   ├── PeminjamanController.php
-│   │   │   ├── PerawatanController.php
-│   │   │   ├── AuditController.php
-│   │   │   └── PengajuanController.php
-│   │   ├── Bendahara/
-│   │   │   ├── DashboardController.php
-│   │   │   ├── KasController.php
-│   │   │   ├── VerifikasiPengadaanController.php
-│   │   │   ├── AnalisisTopsisController.php
-│   │   │   └── LaporanController.php
-│   │   └── Auth/
-│   │       └── LoginController.php
-│   ├── Models/
-│   │   ├── User.php
-│   │   ├── Barang.php
-│   │   ├── BarangMasuk.php
-│   │   ├── BarangKeluar.php
-│   │   ├── Peminjaman.php
-│   │   ├── Perawatan.php
-│   │   ├── Audit.php
-│   │   ├── Pengajuan.php
-│   │   ├── Kas.php
-│   │   ├── AnalisisTopsis.php
-│   │   └── Kriteria.php
-│   └── Http/Middleware/
-│       └── RoleMiddleware.php
-├── database/
-│   ├── migrations/
-│   └── seeders/
-│       ├── UserSeeder.php
-│       ├── KategoriSeeder.php
-│       ├── BarangSeeder.php
-│       └── KriteriaSeeder.php
-├── resources/
-│   ├── views/
-│   │   ├── admin/
-│   │   │   ├── dashboard/
-│   │   │   ├── inventori/
-│   │   │   ├── jadwal-audit/
-│   │   │   ├── kategori/
-│   │   │   ├── laporan/
-│   │   │   └── pengguna/
-│   │   ├── pengurus/
-│   │   │   ├── dashboard/
-│   │   │   ├── barang/
-│   │   │   ├── peminjaman/
-│   │   │   ├── pengajuan/
-│   │   │   ├── Perawatan/
-│   │   │   └── audit/
-│   │   ├── bendahara/
-│   │   │   ├── dashboard/
-│   │   │   ├── kas/
-│   │   │   ├── verifikasi/
-│   │   │   ├── analisis/
-│   │   │   └── laporan/
-│   │   ├── auth/
-│   │   └── layouts/
-│   ├── css/
-│   └── js/
-├── routes/
-│   └── web.php
-├── storage/
-│   └── app/public/
-├── public/
-│   └── storage/
-├── tailwind.config.js
-├── vite.config.js
-└── package.json
+gereja/                                     # Direktori akar proyek Laravel
+├── app/                                    # Berisi kode inti aplikasi (Model, Controller, Middleware, dll.)
+│   ├── Http/                               # Direktori HTTP terkait (Controller, Middleware, Kernel)
+│   │   ├── Controllers/                    # Berisi semua kelas Controller
+│   │   │   ├── Admin/                      # Controller khusus untuk peran Admin
+│   │   │   │   ├── DashboardController.php # Mengelola logika dashboard Admin
+│   │   │   │   ├── BarangController.php    # Mengelola operasi CRUD barang oleh Admin
+│   │   │   │   ├── UserController.php      # Mengelola operasi CRUD pengguna oleh Admin
+│   │   │   │   ├── KategoriController.php  # Mengelola operasi CRUD kategori barang oleh Admin
+│   │   │   │   ├── JadwalAuditController.php # Mengelola jadwal audit oleh Admin
+│   │   │   │   └── LaporanController.php   # Mengelola logika pembuatan laporan oleh Admin
+│   │   │   ├── Pengurus/                   # Controller khusus untuk peran Pengurus
+│   │   │   │   ├── DashboardController.php # Mengelola logika dashboard Pengurus
+│   │   │   │   ├── BarangMasukController.php # Mengelola pencatatan barang masuk oleh Pengurus
+│   │   │   │   ├── BarangKeluarController.php # Mengelola pencatatan barang keluar oleh Pengurus
+│   │   │   │   ├── PeminjamanController.php # Mengelola peminjaman barang oleh Pengurus
+│   │   │   │   ├── PerawatanController.php # Mengelola perawatan barang oleh Pengurus
+│   │   │   │   ├── AuditController.php     # Mengelola pelaksanaan audit oleh Pengurus
+│   │   │   │   └── PengajuanController.php # Mengelola pengajuan pengadaan barang oleh Pengurus
+│   │   │   ├── Bendahara/                  # Controller khusus untuk peran Bendahara
+│   │   │   │   ├── DashboardController.php # Mengelola logika dashboard Bendahara
+│   │   │   │   ├── KasController.php       # Mengelola pencatatan kas masuk/keluar oleh Bendahara
+│   │   │   │   ├── VerifikasiPengadaanController.php # Mengelola verifikasi pengajuan pengadaan oleh Bendahara
+│   │   │   │   ├── AnalisisTopsisController.php # Mengelola logika analisis TOPSIS oleh Bendahara
+│   │   │   │   └── LaporanController.php   # Mengelola logika pembuatan laporan keuangan oleh Bendahara
+│   │   │   └── Auth/                       # Controller terkait otentikasi
+│   │   │       └── LoginController.php     # Mengelola proses login pengguna
+│   │   └── Models/                         # Berisi semua definisi Model Eloquent (merepresentasikan tabel database)
+│   │       ├── User.php                    # Model untuk tabel pengguna
+│   │       ├── Barang.php                  # Model untuk tabel barang inventori
+│   │       ├── BarangMasuk.php             # Model untuk tabel transaksi barang masuk
+│   │       ├── BarangKeluar.php            # Model untuk tabel transaksi barang keluar
+│   │       ├── Peminjaman.php              # Model untuk tabel peminjaman barang
+│   │       ├── Perawatan.php               # Model untuk tabel perawatan barang
+│   │       ├── Audit.php                   # Model untuk tabel audit barang
+│   │       ├── Pengajuan.php               # Model untuk tabel pengajuan pengadaan
+│   │       ├── Kas.php                     # Model untuk tabel kas (keuangan)
+│   │       ├── AnalisisTopsis.php          # Model untuk hasil analisis TOPSIS
+│   │       └── Kriteria.php                # Model untuk kriteria TOPSIS
+│   └── Http/Middleware/                    # Berisi middleware HTTP kustom
+│       └── RoleMiddleware.php              # Middleware untuk otorisasi berdasarkan peran pengguna
+├── database/                               # Berisi file terkait database
+│   ├── migrations/                         # Skema database (pembuatan dan modifikasi tabel)
+│   └── seeders/                            # Data awal untuk diisi ke database (misal: user default, kategori)
+│       ├── UserSeeder.php                  # Seeder untuk data pengguna default
+│       ├── KategoriSeeder.php              # Seeder untuk data kategori barang default
+│       ├── BarangSeeder.php                # Seeder untuk data barang contoh
+│       └── KriteriaSeeder.php              # Seeder untuk data kriteria TOPSIS
+├── resources/                              # Berisi aset frontend (view, CSS, JS)
+│   ├── views/                              # Template Blade untuk antarmuka pengguna
+│   │   ├── admin/                          # View khusus untuk peran Admin
+│   │   │   ├── dashboard/                  # View untuk dashboard Admin
+│   │   │   ├── inventori/                  # View untuk manajemen inventori oleh Admin
+│   │   │   ├── jadwal-audit/               # View untuk jadwal audit Admin
+│   │   │   ├── kategori/                   # View untuk manajemen kategori Admin
+│   │   │   ├── laporan/                    # View untuk laporan Admin
+│   │   │   └── pengguna/                   # View untuk manajemen pengguna Admin
+│   │   ├── pengurus/                       # View khusus untuk peran Pengurus
+│   │   │   ├── dashboard/                  # View untuk dashboard Pengurus
+│   │   │   ├── barang/                     # View untuk barang masuk/keluar Pengurus
+│   │   │   ├── peminjaman/                 # View untuk peminjaman Pengurus
+│   │   │   ├── pengajuan/                  # View untuk pengajuan Pengurus
+│   │   │   ├── Perawatan/                  # View untuk perawatan Pengurus
+│   │   │   └── audit/                      # View untuk audit Pengurus
+│   │   ├── bendahara/                      # View khusus untuk peran Bendahara
+│   │   │   ├── dashboard/                  # View untuk dashboard Bendahara
+│   │   │   ├── kas/                        # View untuk manajemen kas Bendahara
+│   │   │   ├── verifikasi/                 # View untuk verifikasi pengadaan Bendahara
+│   │   │   ├── analisis/                   # View untuk analisis TOPSIS Bendahara
+│   │   │   └── laporan/                    # View untuk laporan keuangan Bendahara
+│   │   ├── auth/                           # View untuk otentikasi (login, register)
+│   │   └── layouts/                        # Template layout dasar (misal: header, sidebar, footer)
+│   ├── css/                                # File CSS mentah (akan diproses oleh Vite)
+│   └── js/                                 # File JavaScript mentah (akan diproses oleh Vite)
+├── routes/                                 # Definisi rute aplikasi
+│   └── web.php                             # Rute web untuk semua URL aplikasi
+├── storage/                                # Direktori untuk file yang diunggah, cache, log
+│   └── app/public/                         # Lokasi penyimpanan file publik yang diunggah (misal: gambar barang)
+├── public/                                 # Direktori yang dapat diakses publik oleh web server
+│   └── storage/                            # Symlink ke `storage/app/public` untuk akses publik
+├── tailwind.config.js                      # Konfigurasi Tailwind CSS
+├── vite.config.js                          # Konfigurasi bundler aset Vite
+└── package.json                            # Daftar dependensi Node.js dan script NPM
 ```
 
-## 👥 Penjelasan Role & Fitur
+## 👥 Penjelasan Role & Fitur 🌟
 
-### 🔧 Admin
+### 🔧 Admin - Pengelola Utama Sistem
 **Akses Penuh Sistem**
-- **Dashboard**: Overview sistem, statistik inventori, grafik transaksi
+- **Dashboard**: Overview sistem, statistik inventori, grafik transaksi 📈
 - **Manajemen Pengguna**: CRUD user, reset password, role management
 - **Master Inventori**: CRUD barang, kategori, status barang
-- **Jadwal Audit**: Buat jadwal audit, assign auditor
+- **Jadwal Audit**: Buat jadwal audit, assign auditor 🗓️
 - **Laporan Sistem**: Laporan inventori, keuangan, aktivitas sistem
 - **Arsip Barang**: Restore/force delete barang yang dihapus
 
@@ -223,30 +226,30 @@ gereja/
 - Manajemen kategori barang
 - Jadwal audit terjadwal
 - Laporan komprehensif semua modul
-- Export PDF/Excel untuk semua laporan
+- Export PDF/Excel untuk semua laporan 📑
 
-### 📦 Pengurus
+### 📦 Pengurus - Manajer Operasional Inventori
 **Manajemen Operasional Inventori**
-- **Dashboard**: Statistik inventori, notifikasi stok rendah
+- **Dashboard**: Statistik inventori, notifikasi stok rendah 🚨
 - **Barang Masuk**: Pencatatan barang masuk dengan validasi stok
 - **Barang Keluar**: Pencatatan barang keluar dengan validasi stok
-- **Peminjaman**: Manajemen peminjaman barang dengan tracking status
+- **Peminjaman**: Manajemen peminjaman barang dengan tracking status 🔄
 - **Perawatan**: Jadwal dan tracking perawatan barang
 - **Audit**: Audit barang mandiri dan terjadwal
 - **Pengajuan**: Pengajuan barang baru dengan kriteria TOPSIS
 
 **Fitur Khusus Pengurus:**
 - Validasi stok real-time
-- Tracking status peminjaman (Dipinjam, Dikembalikan, Terlambat)
+- Tracking status peminjaman (Dipinjam, Dikembalikan, Terlambat) ⏰
 - Perawatan otomatis berdasarkan jadwal
 - Pengajuan dengan kriteria TOPSIS
 - Audit mandiri dan terjadwal
 
-### 💰 Bendahara
+### 💰 Bendahara - Manajer Keuangan & Verifikator
 **Manajemen Keuangan & Verifikasi**
-- **Dashboard**: Statistik keuangan, saldo kas, grafik transaksi
-- **Manajemen Kas**: Pencatatan kas masuk/keluar, upload bukti
-- **Verifikasi Pengadaan**: Verifikasi pengajuan dari pengurus
+- **Dashboard**: Statistik keuangan, saldo kas, grafik transaksi 💰
+- **Manajemen Kas**: Pencatatan kas masuk/keluar, upload bukti 📂
+- **Verifikasi Pengadaan**: Verifikasi pengajuan dari pengurus ✅
 - **Analisis TOPSIS**: Perankingan pengajuan berdasarkan kriteria
 - **Laporan Keuangan**: Laporan kas, pengadaan, analisis
 
@@ -255,15 +258,15 @@ gereja/
 - Verifikasi pengajuan pengadaan
 - Manajemen kas dengan bukti transaksi
 - Laporan keuangan komprehensif
-- Perankingan otomatis pengajuan
+- Perankingan otomatis pengajuan 🏆
 
 ## 🔄 Cara Kerja Sistem (Step-by-Step)
 (… bagian detail alur kerja dapat tetap dipertahankan sesuai kebutuhan, seperti di versi baru)
 
-## 🔧 Konfigurasi
+## 🔧 Konfigurasi Penting
 
 ### Upload File
-- Maksimal ukuran file gambar: 2MB
+- Maksimal ukuran file gambar: 2MB 📏
 - Format yang didukung: JPG, PNG, JPEG
 - Lokasi penyimpanan: `storage/app/public/`
 
@@ -284,11 +287,11 @@ gereja/
 ## 📱 Fitur Mobile-Friendly
 
 Aplikasi responsive dengan Tailwind CSS dan dapat diakses melalui:
-- Desktop
-- Tablet
-- Mobile Phone
+- Desktop 🖥️
+- Tablet 📱
+- Mobile Phone 🤳
 
-## 🔒 Keamanan
+## 🔒 Keamanan Terjamin
 
 - CSRF Protection
 - SQL Injection Prevention (Eloquent ORM)
@@ -298,7 +301,7 @@ Aplikasi responsive dengan Tailwind CSS dan dapat diakses melalui:
 - Password Hashing (bcrypt)
 - Session Management
 
-## 🆘 Troubleshooting
+## 🆘 Troubleshooting Umum
 
 ### Error 500
 ```bash
@@ -336,7 +339,7 @@ php artisan storage:link
 ## 📞 Support
 
 Untuk bantuan teknis atau pertanyaan:
-- instagram: rickychristians 
+- Instagram: [rickychristians](https://www.instagram.com/rickychristians/) 💬
 
 ## 📄 License
 
@@ -348,5 +351,6 @@ Dikembangkan dengan ❤️ untuk HKBP Setia Mekar
 
 ---
 
-**Sistem Inventori Gereja v2.0**  
-© 2024 HKBP Setia Mekar. All rights reserved.
+**Sistem Inventori Gereja v2.0**
+© 2025 HKBP Setia Mekar. All rights reserved.
+```
