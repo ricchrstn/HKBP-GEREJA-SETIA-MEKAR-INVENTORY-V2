@@ -1,29 +1,35 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders; // Ini mendeklarasikan namespace untuk file ini, menandakan bahwa ini adalah seeder untuk database.
 
-use Illuminate\Database\Seeder;
-use App\Models\Barang;
-use App\Models\Kategori;
+use Illuminate\Database\Seeder; // Mengimpor kelas Seeder dari Laravel, yang merupakan dasar untuk membuat seeder.
+use App\Models\Barang; // Mengimpor model Barang, yang merepresentasikan tabel 'barangs' di database.
+use App\Models\Kategori; // Mengimpor model Kategori, yang merepresentasikan tabel 'kategoris' di database.
 
-class BarangSeeder extends Seeder
+class BarangSeeder extends Seeder // Mendeklarasikan kelas BarangSeeder yang merupakan turunan dari kelas Seeder. Ini berarti kelas ini akan digunakan untuk mengisi data awal ke database.
 {
-    public function run()
+    public function run() // Ini adalah metode utama yang akan dijalankan ketika seeder ini dipanggil.
     {
         // Ambil semua kategori
+        // Baris ini akan mengambil semua ID dan nama kategori dari tabel 'kategoris'.
+        // Fungsi pluck('id', 'nama') akan menghasilkan array asosiatif di mana nama kategori menjadi key dan ID kategori menjadi value.
+        // Contoh: ['Peralatan Ibadah' => 1, 'Peralatan Elektronik' => 2, ...]
         $kategoris = Kategori::pluck('id', 'nama');
 
-        $barangs = [
-            // Peralatan Ibadah (Kategori ID: 1)
+        $barangs = [ // Ini adalah array besar yang berisi data barang yang akan diinsert ke tabel 'barangs'.
+            // Setiap elemen dalam array ini adalah array asosiatif yang merepresentasikan satu baris data barang.
+
+            // Peralatan Ibadah (Kategori ID: 1) // Ini adalah komentar untuk mengelompokkan data berdasarkan kategori.
             [
-                'kode_barang' => 'PIB001',
-                'nama' => 'Alkitab',
-                'deskripsi' => 'Alkitab untuk keperluan ibadah',
+                'kode_barang' => 'PIB001', // Kolom 'kode_barang' dengan nilai 'PIB001'.
+                'nama' => 'Alkitab', // Kolom 'nama' dengan nilai 'Alkitab'.
+                'deskripsi' => 'Alkitab untuk keperluan ibadah', // Kolom 'deskripsi'.
+                // Menggunakan ID kategori yang diambil dari array $kategoris berdasarkan nama kategori.
                 'kategori_id' => $kategoris['Peralatan Ibadah'],
-                'satuan' => 'buah',
-                'stok' => 50,
-                'harga' => 75000,
-                'status' => 'aktif',
+                'satuan' => 'buah', // Kolom 'satuan'.
+                'stok' => 50, // Kolom 'stok' dengan nilai 50.
+                'harga' => 75000, // Kolom 'harga' dengan nilai 75000.
+                'status' => 'aktif', // Kolom 'status' dengan nilai 'aktif'.
             ],
             [
                 'kode_barang' => 'PIB002',
@@ -33,16 +39,6 @@ class BarangSeeder extends Seeder
                 'satuan' => 'buah',
                 'stok' => 100,
                 'harga' => 25000,
-                'status' => 'aktif',
-            ],
-            [
-                'kode_barang' => 'PIB003',
-                'nama' => 'Patena',
-                'deskripsi' => 'Wadah roti suci untuk perjamuan kudus',
-                'kategori_id' => $kategoris['Peralatan Ibadah'],
-                'satuan' => 'buah',
-                'stok' => 10,
-                'harga' => 150000,
                 'status' => 'aktif',
             ],
             [
@@ -1035,7 +1031,10 @@ class BarangSeeder extends Seeder
             ],
         ];
 
+        // Ini adalah loop yang akan mengulang setiap elemen (barang) dalam array $barangs.
         foreach ($barangs as $barang) {
+            // Untuk setiap elemen barang, metode create() dari model Barang akan dipanggil.
+            // Metode ini akan mengambil array asosiatif $barang dan memasukkannya sebagai baris baru ke tabel 'barangs' di database.
             Barang::create($barang);
         }
     }

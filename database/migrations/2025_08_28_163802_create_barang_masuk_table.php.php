@@ -1,26 +1,40 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Migrations\Migration; // Mengimpor kelas dasar Migration.
+use Illuminate\Database\Schema\Blueprint; // Mengimpor kelas Blueprint untuk mendefinisikan struktur tabel.
+use Illuminate\Support\Facades\Schema; // Mengimpor Facade Schema untuk berinteraksi dengan database.
 
-return new class extends Migration
+return new class extends Migration // Mendefinisikan kelas migrasi anonim yang mewarisi dari Migration.
 {
-    public function up()
+    /**
+     * Run the migrations. // PHPDoc comment untuk metode up().
+     *
+     * @return void
+     */
+    public function up(): void // Metode `up()` dijalankan ketika migrasi diterapkan.
     {
-        Schema::create('barang_masuk', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('barang_id')->constrained('barang');
-            $table->dateTime('tanggal');
-            $table->integer('jumlah');
-            $table->text('keterangan');
-            $table->foreignId('user_id')->constrained('users');
-            $table->timestamps();
+        Schema::create('barang_masuk', function (Blueprint $table) { // Membuat tabel baru bernama 'barang_masuk'.
+            $table->id(); // Membuat kolom 'id' sebagai primary key auto-incrementing.
+            $table->foreignId('barang_id')->constrained('barang'); // Membuat kolom 'barang_id' (BIGINT UNSIGNED) sebagai foreign key.
+                                                                // `->constrained('barang')` secara otomatis membuat batasan foreign key
+                                                                // yang merujuk ke kolom 'id' di tabel 'barang'.
+            $table->dateTime('tanggal'); // Membuat kolom 'tanggal' dengan tipe data DATETIME untuk mencatat tanggal dan waktu masuk barang.
+            $table->integer('jumlah'); // Membuat kolom 'jumlah' (INTEGER) untuk mencatat kuantitas barang yang masuk.
+            $table->text('keterangan'); // Membuat kolom 'keterangan' (TEXT) untuk detail atau catatan tambahan.
+            $table->foreignId('user_id')->constrained('users'); // Membuat kolom 'user_id' (BIGINT UNSIGNED) sebagai foreign key.
+                                                              // `->constrained('users')` secara otomatis membuat batasan foreign key
+                                                              // yang merujuk ke kolom 'id' di tabel 'users' (user yang mencatat).
+            $table->timestamps(); // Menambahkan kolom 'created_at' dan 'updated_at' (TIMESTAMP).
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations. // PHPDoc comment untuk metode down().
+     *
+     * @return void
+     */
+    public function down(): void // Metode `down()` dijalankan ketika migrasi di-rollback.
     {
-        Schema::dropIfExists('barang_masuk');
+        Schema::dropIfExists('barang_masuk'); // Menghapus tabel 'barang_masuk' jika ada.
     }
 };
