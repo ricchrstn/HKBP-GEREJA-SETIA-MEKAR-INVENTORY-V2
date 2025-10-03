@@ -54,8 +54,8 @@ Sistem manajemen inventori berbasis web yang canggih untuk mengelola barang-bara
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/your-repo/gereja-inventori.git
-cd gereja-inventori
+git clone https://github.com/ricchrstn/HKBP-GEREJA-SETIA-MEKAR-INVENTORY-V2
+cd gereja
 ```
 
 ### 2. Install Dependencies
@@ -109,15 +109,15 @@ Akses aplikasi di: `http://localhost:8000`
 ## 👤 Login Default
 
 ### Admin
-- Email: `admin@gmail.com`
+- Email: `admin@gereja.com`
 - Password: `admin123`
 
 ### Pengurus
-- Email: `pengurus@mail.com`
+- Email: `pengurus@gereja.com`
 - Password: `pengurus123`
 
 ### Bendahara
-- Email: `bendahara@mail.com`
+- Email: `bendahara@gereja.com`
 - Password: `bendahara123`
 
 ## 📁 Struktur Project ✨
@@ -349,8 +349,5 @@ MIT License - Bebas digunakan untuk keperluan gereja dan organisasi non-profit.
 
 Dikembangkan dengan ❤️ untuk HKBP Setia Mekar
 
----
-
 **Sistem Inventori Gereja v2.0**
 © 2025 HKBP Setia Mekar. All rights reserved.
-```
